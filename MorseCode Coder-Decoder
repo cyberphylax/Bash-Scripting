@@ -1,0 +1,81 @@
+#!/bin/bash
+
+#MORSE ENCODER AND DECODER
+
+#executing format: './morse.sh -('e' to encode or 'd' to decode) filename.txt' 
+
+#morse encode function | transforming all characters to uppercase, adding space between every character and then replace each one with the corresponding of morse alphabet
+encode()
+{
+  sed -e 's/[a-z]/\U&/g' -e 's/A/.- /g' -e 's/B/-... /g' -e 's/C/-.-. /g' -e 's/D/-.. /g' -e 's/E/. /g' -e 's/F/..-. /g' -e 's/G/--. /g' -e 's/H/.... /g' -e 's/I/.. /g' -e 's/J/.--- /g' -e 's/K/-.- /g' -e 's/L/.-.. /g' -e 's/M/-- /g' -e 's/N/-. /g' -e 's/O/--- /g' -e 's/P/.--. /g' -e 's/Q/--.- /g' -e 's/R/.-. /g' -e 's/S/... /g' -e 's/T/- /g' -e 's/U/..- /g' -e 's/V/...- /g' -e 's/W/.-- /g' -e 's/X/-..- /g' -e 's/Y/-.-- /g' -e 's/Z/--.. /g' -e 's/1/.---- /g' -e 's/2/..--- /g' -e 's/3/...-- /g' -e 's/4/....- /g' -e 's/5/..... /g' -e 's/6/-.... /g' -e 's/7/--... /g' -e 's/8/---.. /g' -e 's/9/----. /g' -e 's/0/----- /g' $filename
+}
+
+#morse decode function | we add "=" at right and left of every morse letter so that it can be identified and then we replace each one with the corresponding of the alphabet
+decode()
+{
+  sed -e 's/^\(.*\)$/=\1=/' -e 's/ /= =/g' -e 's/=.-=/A/g' -e 's/=-\.\.\.=/B/g' -e 's/=-\.-\.=/C/g' -e 's/=-\.\.=/D/g' -e 's/=\.=/E/g' -e 's/=\.\.-\.=/F/g' -e 's/=--\.=/G/g' -e 's/=\.\.\.\.=/H/g' -e 's/=\.\.=/I/g' -e 's/=\.---=/J/g' -e 's/=-\.-=/K/g' -e 's/=\.-\.\.=/L/g' -e 's/=--=/M/g' -e 's/=-\.=/N/g' -e 's/=---=/O/g' -e 's/=\.--\.=/P/g' -e 's/=--\.-=/Q/g' -e 's/=\.-\.=/R/g' -e 's/=\.\.\.=/S/g' -e 's/=-=/T/g' -e 's/=\.\.-=/U/g' -e 's/=\.\.\.-=/V/g' -e 's/=\.--=/W/g' -e 's/=-\.\.-=/X/g' -e 's/=-\.--=/Y/g' -e 's/=--\.\.=/Z/g' -e 's/=\.----=/1/g' -e 's/=\.\.---=/2/g' -e 's/=\.\.\.--=/3/g' -e 's/=\.\.\.\.-=/4/g' -e 's/=\.\.\.\.\.=/5/g' -e 's/=-\.\.\.\.=/6/g' -e 's/=--\.\.\.=/7/g' -e 's/=---\.\.=/8/g' -e 's/=----\.=/9/g' -e 's/=-----=/0/g' -e 's/ //g' -e 's/==/ /g' $filename 
+}
+
+encode_switch=-e
+decode_switch=-d
+filename=$2 
+
+if [ "$1" = "$encode_switch" ] #check if the user has entered the flag -e 
+  then if [ -z "$2" ] #check if the user has entered a file to encode
+          then
+            echo -e "ERROR: You have to enter the file you wish to encode.\nEx.: './morse.sh -e filename.txt'"
+      
+          else
+            encode #encode function & print of the output using the default print of 'sed' command
+       fi
+  
+  elif [ "$1" = "$decode_switch" ] #check if the user has entered the flag -d
+      then if [ -z "$2" ] #check if the user has entered a file to decode
+              then
+                echo -e "ERROR: You have to enter the file you wish to decode.\nEx.: './morse.sh -d filename.txt'"
+      
+              else
+                decode # decode function & print of the output using the default print of 'sed' command
+            fi
+  # in case the user hasn't entered a flag
+  else echo -e "ERROR: You have to insert a flag and then the file you want.\nType -e to encode or -d to decode the file.\nEx.: './morse.sh -e filename.txt'" 
+fi
+
+
+#Morse Code Alphabet
+# A .-  
+# B -...
+# C -.-.
+# D -..
+# E .
+# F ..-.
+# G --.
+# H ....
+# I ..
+# J .---
+# K -.-
+# L .-..
+# M --
+# N -.
+# O ---
+# P .--.
+# Q --.-
+# R .-.
+# S ...
+# T -
+# U ..-
+# V ...-
+# W .--
+# X -..- 
+# Y -.--
+# Z --..
+# 1 .----
+# 2 ..---
+# 3 ...--
+# 4 ....-
+# 5 .....
+# 6 -....
+# 7 --...
+# 8 ---..
+# 9 ----.
+# 0 -----
